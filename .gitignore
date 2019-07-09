@@ -1,3 +1,15 @@
+# QT stuff
+*.cxx
+*.cxx_parameters
+ui_help_window.h
+ui_main_window.h
+
+# Cmake stuff
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
 # Compiled Object files
 *.slo
 *.lo
@@ -26,3 +38,5 @@
 *.exe
 *.out
 *.app
+pcl_in_hand_scanner
+pcl_offline_integration
