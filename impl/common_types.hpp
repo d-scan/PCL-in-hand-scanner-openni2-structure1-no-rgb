@@ -96,7 +96,7 @@ namespace pcl
         this->directions = other.directions;
       }
 
-      inline PointIHS (const pcl::PointXYZRGBNormal& other, const float weight)
+      inline PointIHS (const pcl::PointNormal& other, const float weight)
       {
         this->x       = other.x;
         this->y       = other.y;
@@ -108,7 +108,7 @@ namespace pcl
         this->normal_z  = other.normal_z;
         this->data_n[3] = other.data_n[3];
 
-        this->rgba = other.rgba;
+        //this->rgba = other.rgba;
 
         this->weight     = weight;
         this->age        = 0;

@@ -72,10 +72,10 @@ namespace pcl
     {
       public:
 
-        typedef pcl::PointXYZRGBNormal              PointXYZRGBNormal;
-        typedef pcl::PointCloud <PointXYZRGBNormal> CloudXYZRGBNormal;
-        typedef CloudXYZRGBNormal::Ptr              CloudXYZRGBNormalPtr;
-        typedef CloudXYZRGBNormal::ConstPtr         CloudXYZRGBNormalConstPtr;
+        typedef pcl::PointNormal              PointNormal;
+        typedef pcl::PointCloud <PointNormal> CloudNormal;
+        typedef CloudNormal::Ptr              CloudNormalPtr;
+        typedef CloudNormal::ConstPtr         CloudNormalConstPtr;
 
         typedef pcl::ihs::Mesh         Mesh;
         typedef pcl::ihs::MeshPtr      MeshPtr;
@@ -159,7 +159,7 @@ namespace pcl
           */
         bool
         findTransformation (const MeshConstPtr&              mesh_model,
-                            const CloudXYZRGBNormalConstPtr& cloud_data,
+                            const CloudNormalConstPtr& cloud_data,
                             const Eigen::Matrix4f&           T_init,
                             Eigen::Matrix4f&                 T_final);
 
@@ -188,7 +188,7 @@ namespace pcl
           * \return Cloud containing the selected points.
           */
         CloudNormalConstPtr
-        selectDataPoints (const CloudXYZRGBNormalConstPtr& cloud_data) const;
+        selectDataPoints (const CloudNormalConstPtr& cloud_data) const;
 
         /** \brief Finds the transformation that minimizes the point to plane distance from the source to the target cloud. The input clouds must be arranged to have one to one correspondences (point 0 in source corresponds to point 0 in target, point 1 in source to point 1 in target and so on).
           * \param[in] cloud_source Source cloud (data).

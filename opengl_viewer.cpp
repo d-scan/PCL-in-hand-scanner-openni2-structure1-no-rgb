@@ -472,7 +472,7 @@ pcl::ihs::OpenGLViewer::addMesh (const MeshConstPtr& mesh, const std::string& id
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-pcl::ihs::OpenGLViewer::addMesh (const CloudXYZRGBNormalConstPtr& cloud, const std::string& id, const Eigen::Isometry3d& T)
+pcl::ihs::OpenGLViewer::addMesh (const CloudNormalConstPtr& cloud, const std::string& id, const Eigen::Isometry3d& T)
 {
   if (!cloud)
   {
@@ -507,7 +507,7 @@ pcl::ihs::OpenGLViewer::addMesh (const CloudXYZRGBNormalConstPtr& cloud, const s
   // Helper functor
   struct AddVertex
   {
-    inline int operator () (const PointXYZRGBNormal& pt, CloudIHS& vertices, int& ind_o) const
+    inline int operator () (const PointNormal& pt, CloudIHS& vertices, int& ind_o) const
     {
       if (ind_o == -1)
       {
@@ -532,10 +532,10 @@ pcl::ihs::OpenGLViewer::addMesh (const CloudXYZRGBNormalConstPtr& cloud, const s
       ind_o_2 = ind_o_0 + offset_2;
       ind_o_3 = ind_o_0 + offset_3;
 
-      const PointXYZRGBNormal& pt_0 = cloud->operator [] (ind_o_0);
-      const PointXYZRGBNormal& pt_1 = cloud->operator [] (ind_o_1);
-      const PointXYZRGBNormal& pt_2 = cloud->operator [] (ind_o_2);
-      const PointXYZRGBNormal& pt_3 = cloud->operator [] (ind_o_3);
+      const PointNormal& pt_0 = cloud->operator [] (ind_o_0);
+      const PointNormal& pt_1 = cloud->operator [] (ind_o_1);
+      const PointNormal& pt_2 = cloud->operator [] (ind_o_2);
+      const PointNormal& pt_3 = cloud->operator [] (ind_o_3);
 
       if (!boost::math::isnan (pt_1.x) && !boost::math::isnan (pt_3.x))
       {

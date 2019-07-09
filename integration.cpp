@@ -64,7 +64,7 @@ pcl::ihs::Integration::Integration ()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-pcl::ihs::Integration::reconstructMesh (const CloudXYZRGBNormalConstPtr& cloud_data,
+pcl::ihs::Integration::reconstructMesh (const CloudNormalConstPtr& cloud_data,
                                         MeshPtr&                         mesh_model) const
 {
   if (!cloud_data)
@@ -98,7 +98,7 @@ pcl::ihs::Integration::reconstructMesh (const CloudXYZRGBNormalConstPtr& cloud_d
   // Set the model points not reached by the main loop
   for (int c=0; c<width; ++c)
   {
-    const PointXYZRGBNormal& pt_d = cloud_data->operator [] (c);
+    const PointNormal& pt_d = cloud_data->operator [] (c);
     const float weight = -pt_d.normal_z; // weight = -dot (normal, [0; 0; 1])
 
     if (!boost::math::isnan (pt_d.x) && weight > min_weight_)
@@ -110,7 +110,7 @@ pcl::ihs::Integration::reconstructMesh (const CloudXYZRGBNormalConstPtr& cloud_d
   {
     for (int c=0; c<2; ++c)
     {
-      const PointXYZRGBNormal& pt_d = cloud_data->operator [] (r*width + c);
+      const PointNormal& pt_d = cloud_data->operator [] (r*width + c);
       const float weight = -pt_d.normal_z; // weight = -dot (normal, [0; 0; 1])
 
       if (!boost::math::isnan (pt_d.x) && weight > min_weight_)
@@ -148,7 +148,7 @@ pcl::ihs::Integration::reconstructMesh (const CloudXYZRGBNormalConstPtr& cloud_d
       assert (ind_3 >= 0 && ind_3 < static_cast <int> (cloud_data->size ()));
       assert (ind_4 >= 0 && ind_4 < static_cast <int> (cloud_data->size ()));
 
-      const PointXYZRGBNormal& pt_d_0 = cloud_data->operator  [] (ind_0);
+      const PointNormal& pt_d_0 = cloud_data->operator  [] (ind_0);
       PointIHS&                pt_m_0 = cloud_model->operator [] (ind_0);
       const PointIHS&          pt_m_1 = cloud_model->operator [] (ind_1);
       const PointIHS&          pt_m_2 = cloud_model->operator [] (ind_2);
@@ -182,7 +182,7 @@ pcl::ihs::Integration::reconstructMesh (const CloudXYZRGBNormalConstPtr& cloud_d
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-pcl::ihs::Integration::merge (const CloudXYZRGBNormalConstPtr& cloud_data,
+pcl::ihs::Integration::merge (const CloudNormalConstPtr& cloud_data,
                               MeshPtr&                         mesh_model,
                               const Eigen::Matrix4f&           T) const
 {
@@ -239,7 +239,7 @@ pcl::ihs::Integration::merge (const CloudXYZRGBNormalConstPtr& cloud_data,
   // Set the transformed points not reached by the main loop
   for (int c=0; c<width; ++c)
   {
-    const PointXYZRGBNormal& pt_d = cloud_data->operator [] (c);
+    const PointNormal& pt_d = cloud_data->operator [] (c);
     const float weight = -pt_d.normal_z; // weight = -dot (normal, [0; 0; 1])
 
     if (!boost::math::isnan (pt_d.x) && weight > min_weight_)
@@ -254,7 +254,7 @@ pcl::ihs::Integration::merge (const CloudXYZRGBNormalConstPtr& cloud_data,
   {
     for (int c=0; c<2; ++c)
     {
-      const PointXYZRGBNormal& pt_d = cloud_data->operator [] (r*width + c);
+      const PointNormal& pt_d = cloud_data->operator [] (r*width + c);
       const float weight = -pt_d.normal_z; // weight = -dot (normal, [0; 0; 1])
 
       if (!boost::math::isnan (pt_d.x) && weight > min_weight_)
@@ -297,7 +297,7 @@ pcl::ihs::Integration::merge (const CloudXYZRGBNormalConstPtr& cloud_data,
       assert (ind_3 >= 0 && ind_3 < static_cast <int> (cloud_data->size ()));
       assert (ind_4 >= 0 && ind_4 < static_cast <int> (cloud_data->size ()));
 
-      const PointXYZRGBNormal& pt_d_0   = cloud_data->operator             [] (ind_0);
+      const PointNormal& pt_d_0   = cloud_data->operator             [] (ind_0);
       PointIHS&                pt_d_t_0 = cloud_data_transformed->operator [] (ind_0);
       const PointIHS&          pt_d_t_1 = cloud_data_transformed->operator [] (ind_1);
       const PointIHS&          pt_d_t_2 = cloud_data_transformed->operator [] (ind_2);

@@ -154,7 +154,7 @@ pcl::ihs::ICP::getMaxAngle () const
 
 bool
 pcl::ihs::ICP::findTransformation (const MeshConstPtr&              mesh_model,
-                                   const CloudXYZRGBNormalConstPtr& cloud_data,
+                                   const CloudNormalConstPtr& cloud_data,
                                    const Eigen::Matrix4f&           T_init,
                                    Eigen::Matrix4f&                 T_final)
 {
@@ -399,12 +399,12 @@ pcl::ihs::ICP::selectModelPoints (const MeshConstPtr&    mesh_model,
 ////////////////////////////////////////////////////////////////////////////////
 
 pcl::ihs::ICP::CloudNormalConstPtr
-pcl::ihs::ICP::selectDataPoints (const CloudXYZRGBNormalConstPtr& cloud_data) const
+pcl::ihs::ICP::selectDataPoints (const CloudNormalConstPtr& cloud_data) const
 {
   const CloudNormalPtr cloud_data_out (new CloudNormal ());
   cloud_data_out->reserve (cloud_data->size ());
 
-  CloudXYZRGBNormal::const_iterator it_in = cloud_data->begin ();
+  CloudNormal::const_iterator it_in = cloud_data->begin ();
   for (; it_in!=cloud_data->end (); ++it_in)
   {
     if (!boost::math::isnan (it_in->x))

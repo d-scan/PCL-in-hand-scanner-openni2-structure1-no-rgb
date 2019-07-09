@@ -72,15 +72,15 @@ namespace pcl
     {
       public:
 
-        typedef pcl::PointXYZRGBA              PointXYZRGBA;
-        typedef pcl::PointCloud <PointXYZRGBA> CloudXYZRGBA;
-        typedef CloudXYZRGBA::Ptr              CloudXYZRGBAPtr;
-        typedef CloudXYZRGBA::ConstPtr         CloudXYZRGBAConstPtr;
+        typedef pcl::PointXYZ              PointXYZ;
+        typedef pcl::PointCloud <PointXYZ> CloudXYZ;
+        typedef CloudXYZ::Ptr              CloudXYZPtr;
+        typedef CloudXYZ::ConstPtr         CloudXYZConstPtr;
 
-        typedef pcl::PointXYZRGBNormal              PointXYZRGBNormal;
-        typedef pcl::PointCloud <PointXYZRGBNormal> CloudXYZRGBNormal;
-        typedef CloudXYZRGBNormal::Ptr              CloudXYZRGBNormalPtr;
-        typedef CloudXYZRGBNormal::ConstPtr         CloudXYZRGBNormalConstPtr;
+        typedef pcl::PointNormal              PointNormal;
+        typedef pcl::PointCloud <PointNormal> CloudNormal;
+        typedef CloudNormal::Ptr              CloudNormalPtr;
+        typedef CloudNormal::ConstPtr         CloudNormalConstPtr;
 
         /** \brief Constructor */
         InputDataProcessing ();
@@ -93,9 +93,9 @@ namespace pcl
           * \note Converts from m to cm.
           */
         bool
-        segment (const CloudXYZRGBAConstPtr& cloud_in,
-                 CloudXYZRGBNormalPtr&       cloud_out,
-                 CloudXYZRGBNormalPtr&       cloud_discarded) const;
+        segment (const CloudXYZConstPtr& cloud_in,
+                 CloudNormalPtr&       cloud_out,
+                 CloudNormalPtr&       cloud_discarded) const;
 
         /** \brief Calculate the normals of the input cloud.
           * \param[in] cloud_in The input cloud.
@@ -104,8 +104,8 @@ namespace pcl
           * \note Converts from m to cm.
           */
         bool
-        calculateNormals (const CloudXYZRGBAConstPtr& cloud_in,
-                          CloudXYZRGBNormalPtr&       cloud_out) const;
+        calculateNormals (const CloudXYZConstPtr& cloud_in,
+                          CloudNormalPtr&       cloud_out) const;
 
         /** @{ */
         /** \brief Points outside of X - Y - Z - min / max are discarded. The unit is cm. The min values must be smaller than the max values. */
@@ -174,7 +174,7 @@ namespace pcl
         typedef boost::shared_ptr <CloudNormals>       CloudNormalsPtr;
         typedef boost::shared_ptr <const CloudNormals> CloudNormalsConstPtr;
 
-        typedef pcl::IntegralImageNormalEstimation <PointXYZRGBA, Normal> NormalEstimation;
+        typedef pcl::IntegralImageNormalEstimation <PointXYZ, Normal> NormalEstimation;
         typedef boost::shared_ptr <NormalEstimation>                      NormalEstimationPtr;
         typedef boost::shared_ptr <const NormalEstimation>                NormalEstimationConstPtr;
 

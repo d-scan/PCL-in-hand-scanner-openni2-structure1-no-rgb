@@ -189,15 +189,15 @@ namespace pcl
 
       private:
 
-        typedef pcl::PointXYZRGBA              PointXYZRGBA;
-        typedef pcl::PointCloud <PointXYZRGBA> CloudXYZRGBA;
-        typedef CloudXYZRGBA::Ptr              CloudXYZRGBAPtr;
-        typedef CloudXYZRGBA::ConstPtr         CloudXYZRGBAConstPtr;
+        typedef pcl::PointXYZ              PointXYZ;
+        typedef pcl::PointCloud <PointXYZ> CloudXYZ;
+        typedef CloudXYZ::Ptr              CloudXYZPtr;
+        typedef CloudXYZ::ConstPtr         CloudXYZConstPtr;
 
-        typedef pcl::PointXYZRGBNormal              PointXYZRGBNormal;
-        typedef pcl::PointCloud <PointXYZRGBNormal> CloudXYZRGBNormal;
-        typedef CloudXYZRGBNormal::Ptr              CloudXYZRGBNormalPtr;
-        typedef CloudXYZRGBNormal::ConstPtr         CloudXYZRGBNormalConstPtr;
+        typedef pcl::PointNormal              PointNormal;
+        typedef pcl::PointCloud <PointNormal> CloudNormal;
+        typedef CloudNormal::Ptr              CloudNormalPtr;
+        typedef CloudNormal::ConstPtr         CloudNormalConstPtr;
 
         typedef pcl::ihs::PointIHS         PointIHS;
         typedef pcl::ihs::CloudIHS         CloudIHS;
@@ -230,7 +230,7 @@ namespace pcl
 
         /** \brief Called when new data arries from the grabber. The grabbing - registration - integration pipeline is implemented here. */
         void
-        newDataCallback (const CloudXYZRGBAConstPtr& cloud_in);
+        newDataCallback (const CloudXYZConstPtr& cloud_in);
 
         /** \see http://doc.qt.digia.com/qt/qwidget.html#paintEvent
           * \see http://doc.qt.digia.com/qt/opengl-overpainting.html

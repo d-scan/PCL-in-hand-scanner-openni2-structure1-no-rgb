@@ -78,9 +78,9 @@ pcl::ihs::InputDataProcessing::InputDataProcessing ()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
-                                        CloudXYZRGBNormalPtr&       cloud_out,
-                                        CloudXYZRGBNormalPtr&       cloud_discarded) const
+pcl::ihs::InputDataProcessing::segment (const CloudXYZConstPtr& cloud_in,
+                                        CloudNormalPtr&       cloud_out,
+                                        CloudNormalPtr&       cloud_discarded) const
 {
   if (!cloud_in)
   {
@@ -93,8 +93,8 @@ pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
     return (false);
   }
 
-  if (!cloud_out)       cloud_out       = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
-  if (!cloud_discarded) cloud_discarded = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
+  if (!cloud_out)       cloud_out       = CloudNormalPtr (new CloudNormal ());
+  if (!cloud_discarded) cloud_discarded = CloudNormalPtr (new CloudNormal ());
 
   const unsigned int width  = cloud_in->width;
   const unsigned int height = cloud_in->height;
@@ -121,7 +121,7 @@ pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
   {
     for (MatrixXb::Index c=0; c<xyz_mask.cols (); ++c)
     {
-      const PointXYZRGBA& xyzrgb = (*cloud_in)      [r*width + c];
+      const PointXYZ& xyzrgb = (*cloud_in)      [r*width + c];
       const Normal&       normal = (*cloud_normals) [r*width + c];
 
       xyz_mask (r, c) = hsv_mask (r, c) = false;
@@ -133,7 +133,7 @@ pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
       {
         xyz_mask (r, c) = true;
 
-        this->RGBToHSV (xyzrgb.r, xyzrgb.g, xyzrgb.b, h, s, v);
+        //this->RGBToHSV (xyzrgb.r, xyzrgb.g, xyzrgb.b, h, s, v);
         if (h >= h_min_ && h <= h_max_ && s >= s_min_ && s <= s_max_ && v >= v_min_ && v <= v_max_)
         {
           if (!hsv_inverted_) hsv_mask (r, c) = true;
@@ -154,12 +154,12 @@ pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
   cloud_out->reserve (cloud_in->size ());
   cloud_discarded->reserve (cloud_in->size ());
 
-  pcl::PointXYZRGBNormal pt_out, pt_discarded;
-  pt_discarded.r = 50;
-  pt_discarded.g = 50;
-  pt_discarded.b = 230;
+  pcl::PointNormal pt_out, pt_discarded;
+  //pt_discarded.r = 50;
+  //pt_discarded.g = 50;
+  //pt_discarded.b = 230;
 
-  PointXYZRGBA xyzrgb;
+  PointXYZ xyzrgb;
   Normal       normal;
 
   for (MatrixXb::Index r=0; r<xyz_mask.rows (); ++r)
@@ -185,7 +185,7 @@ pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
         {
           pt_out.getVector4fMap ()       = xyzrgb.getVector4fMap ();
           pt_out.getNormalVector4fMap () = normal.getNormalVector4fMap ();
-          pt_out.rgba                    = xyzrgb.rgba;
+          //pt_out.rgba                    = xyzrgb.rgba;
 
           pt_discarded.x = std::numeric_limits <float>::quiet_NaN ();
         }
@@ -211,8 +211,8 @@ pcl::ihs::InputDataProcessing::segment (const CloudXYZRGBAConstPtr& cloud_in,
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-pcl::ihs::InputDataProcessing::calculateNormals (const CloudXYZRGBAConstPtr& cloud_in,
-                                                 CloudXYZRGBNormalPtr&       cloud_out) const
+pcl::ihs::InputDataProcessing::calculateNormals (const CloudXYZConstPtr& cloud_in,
+                                                 CloudNormalPtr&       cloud_out) const
 {
   if (!cloud_in)
   {
@@ -221,7 +221,7 @@ pcl::ihs::InputDataProcessing::calculateNormals (const CloudXYZRGBAConstPtr& clo
   }
 
   if (!cloud_out)
-    cloud_out = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
+    cloud_out = CloudNormalPtr (new CloudNormal ());
 
   // Calculate the normals
   CloudNormalsPtr cloud_normals (new CloudNormals ());
@@ -234,11 +234,11 @@ pcl::ihs::InputDataProcessing::calculateNormals (const CloudXYZRGBAConstPtr& clo
   cloud_out->height   = cloud_in->height;
   cloud_out->is_dense = false;
 
-  CloudXYZRGBA::const_iterator it_in  = cloud_in->begin ();
+  CloudXYZ::const_iterator it_in  = cloud_in->begin ();
   CloudNormals::const_iterator it_n   = cloud_normals->begin ();
-  CloudXYZRGBNormal::iterator  it_out = cloud_out->begin ();
+  CloudNormal::iterator  it_out = cloud_out->begin ();
 
-  PointXYZRGBNormal invalid_pt;
+  PointNormal invalid_pt;
   invalid_pt.x        = invalid_pt.y        = invalid_pt.z        = std::numeric_limits <float>::quiet_NaN ();
   invalid_pt.normal_x = invalid_pt.normal_y = invalid_pt.normal_z = std::numeric_limits <float>::quiet_NaN ();
   invalid_pt.data   [3] = 1.f;
@@ -251,7 +251,7 @@ pcl::ihs::InputDataProcessing::calculateNormals (const CloudXYZRGBAConstPtr& clo
       // m -> cm
       it_out->getVector4fMap ()       = 100.f * it_in->getVector4fMap ();
       it_out->data [3]                = 1.f;
-      it_out->rgba                    = it_in->rgba;
+      //it_out->rgba                    = it_in->rgba;
       it_out->getNormalVector4fMap () = it_n->getNormalVector4fMap ();
     }
     else

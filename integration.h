@@ -72,10 +72,10 @@ namespace pcl
     {
       public:
 
-        typedef pcl::PointXYZRGBNormal              PointXYZRGBNormal;
-        typedef pcl::PointCloud <PointXYZRGBNormal> CloudXYZRGBNormal;
-        typedef CloudXYZRGBNormal::Ptr              CloudXYZRGBNormalPtr;
-        typedef CloudXYZRGBNormal::ConstPtr         CloudXYZRGBNormalConstPtr;
+        typedef pcl::PointNormal              PointNormal;
+        typedef pcl::PointCloud <PointNormal> CloudNormal;
+        typedef CloudNormal::Ptr              CloudNormalPtr;
+        typedef CloudNormal::ConstPtr         CloudNormalConstPtr;
 
         typedef pcl::ihs::Mesh            Mesh;
         typedef pcl::ihs::MeshPtr         MeshPtr;
@@ -92,7 +92,7 @@ namespace pcl
           * \return true if success.
           */
         bool
-        reconstructMesh (const CloudXYZRGBNormalConstPtr& cloud_data,
+        reconstructMesh (const CloudNormalConstPtr& cloud_data,
                          MeshPtr&                         mesh_model) const;
 
         /** \brief Merge the organized cloud into the mesh.
@@ -102,7 +102,7 @@ namespace pcl
           * \return true if success.
           */
         bool
-        merge (const CloudXYZRGBNormalConstPtr& cloud_data,
+        merge (const CloudNormalConstPtr& cloud_data,
                MeshPtr&                         mesh_model,
                const Eigen::Matrix4f&           T) const;
 

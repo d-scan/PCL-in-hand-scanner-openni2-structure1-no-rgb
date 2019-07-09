@@ -285,7 +285,7 @@ pcl::ihs::InHandScanner::keyPressEvent (QKeyEvent* event)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-pcl::ihs::InHandScanner::newDataCallback (const CloudXYZRGBAConstPtr& cloud_in)
+pcl::ihs::InHandScanner::newDataCallback (const CloudXYZConstPtr& cloud_in)
 {
   Base::calcFPS (computation_fps_); // Must come before the lock!
 
@@ -295,11 +295,11 @@ pcl::ihs::InHandScanner::newDataCallback (const CloudXYZRGBAConstPtr& cloud_in)
   pcl::StopWatch sw;
 
   // Input data processing
-  CloudXYZRGBNormalPtr cloud_data;
-  CloudXYZRGBNormalPtr cloud_discarded;
+  CloudNormalPtr cloud_data;
+  CloudNormalPtr cloud_discarded;
   if (running_mode_ == RM_SHOW_MODEL)
   {
-    cloud_data = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
+    cloud_data = CloudNormalPtr (new CloudNormal ());
   }
   else if (running_mode_ == RM_UNPROCESSED)
   {
@@ -332,7 +332,7 @@ pcl::ihs::InHandScanner::newDataCallback (const CloudXYZRGBAConstPtr& cloud_in)
                 << "  - time reconstruct mesh          : "
                 << std::setw (8) << std::right << sw.getTime () << " ms\n";
 
-      cloud_data = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
+      cloud_data = CloudNormalPtr (new CloudNormal ());
       ++iteration_;
     }
     else
@@ -364,7 +364,7 @@ pcl::ihs::InHandScanner::newDataCallback (const CloudXYZRGBAConstPtr& cloud_in)
         std::cerr << "  - time mesh processing           : "
                   << std::setw (8) << std::right << sw.getTime () << " ms\n";
 
-        cloud_data = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
+        cloud_data = CloudNormalPtr (new CloudNormal ());
         ++iteration_;
       }
     }
@@ -488,7 +488,7 @@ pcl::ihs::InHandScanner::startGrabberImpl ()
   lock.lock ();
   if (destructor_called_) return;
 
-  boost::function <void (const CloudXYZRGBAConstPtr&)> new_data_cb = boost::bind (&pcl::ihs::InHandScanner::newDataCallback, this, _1);
+  boost::function <void (const CloudXYZConstPtr&)> new_data_cb = boost::bind (&pcl::ihs::InHandScanner::newDataCallback, this, _1);
   new_data_connection_ = grabber_->registerCallback (new_data_cb);
   grabber_->start ();
 
