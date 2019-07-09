@@ -124,7 +124,7 @@ pcl::ihs::OfflineIntegration::computationThread ()
 
   // First cloud is reference model
   std::cerr << "Processing file " << std::setw (5) << 1 << " / " << filenames.size () << std::endl;
-  CloudXYZRGBNormalPtr cloud_model (new CloudXYZRGBNormal ());
+  CloudNormalPtr cloud_model (new CloudNormal ());
   Eigen::Matrix4f T = Eigen::Matrix4f::Identity ();
   if (!this->load (filenames [0], cloud_model, T))
   {
@@ -158,7 +158,7 @@ pcl::ihs::OfflineIntegration::computationThread ()
     }
     boost::mutex::scoped_lock lock_quit (mutex_quit_);
 
-    CloudXYZRGBNormalPtr cloud_data (new CloudXYZRGBNormal ());
+    CloudNormalPtr cloud_data (new CloudNormal ());
     if (!this->load (filenames [i], cloud_data, T))
     {
       std::cerr << "ERROR in offline_integration.cpp: Could not load the data cloud.\n";
@@ -258,16 +258,16 @@ pcl::ihs::OfflineIntegration::loadTransform (const std::string& filename,
 
 bool
 pcl::ihs::OfflineIntegration::load (const std::string&    filename,
-                                    CloudXYZRGBNormalPtr& cloud,
+                                    CloudNormalPtr& cloud,
                                     Eigen::Matrix4f&      T) const
 {
   if (!cloud)
   {
-    cloud = CloudXYZRGBNormalPtr (new CloudXYZRGBNormal ());
+    cloud = CloudNormalPtr (new CloudNormal ());
   }
 
   // Load the cloud.
-  CloudXYZRGBAPtr cloud_input (new CloudXYZRGBA ());
+  CloudXYZPtr cloud_input (new CloudXYZ ());
 
   pcl::PCDReader reader;
   if (reader.read (filename, *cloud_input) < 0)

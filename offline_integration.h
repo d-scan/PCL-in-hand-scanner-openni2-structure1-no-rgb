@@ -106,15 +106,15 @@ namespace pcl
 
       private:
 
-        typedef pcl::PointXYZRGBA              PointXYZRGBA;
-        typedef pcl::PointCloud <PointXYZRGBA> CloudXYZRGBA;
-        typedef CloudXYZRGBA::Ptr              CloudXYZRGBAPtr;
-        typedef CloudXYZRGBA::ConstPtr         CloudXYZRGBAConstPtr;
+        typedef pcl::PointXYZ              PointXYZ;
+        typedef pcl::PointCloud <PointXYZ> CloudXYZ;
+        typedef CloudXYZ::Ptr              CloudXYZPtr;
+        typedef CloudXYZ::ConstPtr         CloudXYZConstPtr;
 
-        typedef pcl::PointXYZRGBNormal              PointXYZRGBNormal;
-        typedef pcl::PointCloud <PointXYZRGBNormal> CloudXYZRGBNormal;
-        typedef CloudXYZRGBNormal::Ptr              CloudXYZRGBNormalPtr;
-        typedef CloudXYZRGBNormal::ConstPtr         CloudXYZRGBNormalConstPtr;
+        typedef pcl::PointNormal              PointNormal;
+        typedef pcl::PointCloud <PointNormal> CloudNormal;
+        typedef CloudNormal::Ptr              CloudNormalPtr;
+        typedef CloudNormal::ConstPtr         CloudNormalConstPtr;
 
         typedef pcl::ihs::Mesh         Mesh;
         typedef pcl::ihs::MeshPtr      MeshPtr;
@@ -124,7 +124,7 @@ namespace pcl
         typedef boost::shared_ptr <Integration>       IntegrationPtr;
         typedef boost::shared_ptr <const Integration> IntegrationConstPtr;
 
-        typedef pcl::IntegralImageNormalEstimation <PointXYZRGBA, PointXYZRGBNormal> NormalEstimation;
+        typedef pcl::IntegralImageNormalEstimation <PointXYZ, PointNormal> NormalEstimation;
         typedef boost::shared_ptr <NormalEstimation>                                 NormalEstimationPtr;
         typedef boost::shared_ptr <const NormalEstimation>                           NormalEstimationConstPtr;
 
@@ -173,7 +173,7 @@ namespace pcl
           */
         bool
         load (const std::string&    filename,
-              CloudXYZRGBNormalPtr& cloud,
+              CloudNormalPtr& cloud,
               Eigen::Matrix4f&      T) const;
 
         /** \see http://doc.qt.digia.com/qt/qwidget.html#paintEvent

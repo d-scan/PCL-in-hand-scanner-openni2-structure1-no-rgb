@@ -165,10 +165,12 @@ namespace pcl
 
       private:
 
+        /*
         typedef pcl::PointNormal              PointNormal;
         typedef pcl::PointCloud <PointNormal> CloudNormal;
         typedef CloudNormal::Ptr              CloudNormalPtr;
         typedef CloudNormal::ConstPtr         CloudNormalConstPtr;
+        */
 
         typedef pcl::KdTree <PointNormal>        KdTree;
         typedef boost::shared_ptr <KdTree>       KdTreePtr;
